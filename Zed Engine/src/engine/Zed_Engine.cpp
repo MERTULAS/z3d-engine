@@ -1,6 +1,7 @@
 #include "Zed_Engine.h"
 
 SDL_Texture* playerTex;
+SDL_Rect srcR, destR;
 
 Zed_Engine::Zed_Engine() {
 	renderer = nullptr;
@@ -39,7 +40,7 @@ void Zed_Engine::Init(const char* title, int xPos, int yPos, int width, int heig
 		isRunning = true;
 	}
 
-	SDL_Surface* tmpSurface = IMG_Load("assets/untitled.png");
+	SDL_Surface* tmpSurface = IMG_Load("src/assets/untitled.png");
 	playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
 	SDL_FreeSurface(tmpSurface);
 }
@@ -59,11 +60,15 @@ void Zed_Engine::HandleEvents() {
 
 void Zed_Engine::Update() {
 	cnt++;
+
+	destR.h = 32;
+	destR.w = 32;
+	destR.x = cnt >> 1;
 }
 
 void Zed_Engine::Render() {
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, playerTex, NULL, NULL);
+	SDL_RenderCopy(renderer, playerTex, NULL, &destR);
 
 	SDL_RenderPresent(renderer);
 }
